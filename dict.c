@@ -39,6 +39,18 @@ void add(dict *d, char *key, char *content){
     balance(d);
 }
 
+char *find(dict *d, char *key){
+    dict root = *d;
+    if (root == NULL) return NULL;
+    int compare = strncmp(key, root->key, MAX_KEY_SIZE);
+    if (compare == 0) return root->content;
+    else if (compare > 0){
+	return find(&root->right, key);
+    } else {
+	return find(&root->left, key);
+    }
+}
+
 void balance(dict *d){
     dict root = *d;
     if (root == NULL) return;
@@ -86,9 +98,6 @@ void updateHeight(dict *d){
 int getHeight(dict *d){
     if (*d == NULL) return 0;
     else return ((*d)->height);
-}
-
-char *find(dict *d, char *key){
 }
 
 void print(dict *d){

@@ -4,7 +4,9 @@
 
 int main(){
     GC_INIT();
-    dict *d = GC_MALLOC(sizeof(dict));
-    print(d);
+    dict *d;
+    d = GC_MALLOC(sizeof(dict));
+    add(d, "Tunbg", "deptrai");
+    printf("%s\n", find(d, "Tunbg"));
     return 0;
 }
