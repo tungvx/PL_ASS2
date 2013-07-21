@@ -2,5 +2,5 @@ FNAME=Tung
 LNAME=Vu
 PLACE=Jaist
 %
-My name is FNAME LNAME 
+My name is FNAME xLNAMEy
 and I am working at PLACE.

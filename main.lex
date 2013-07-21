@@ -3,7 +3,8 @@ CAPITALS	[A-Z]
 LOWER		[a-z]
 SPACE		" "
 PUNCTUATION	[':,!.?;]
-NORMAL 		{CAPITALS}|{LOWER}|{SPACE}|{PUNCTUATION}
+NONCAPITALS 	{LOWER}|{SPACE}|{PUNCTUATION}
+NORMAL		{CAPITALS}|{NONCAPITALS}
 
 %{
 #include "main.tab.h"
@@ -11,12 +12,15 @@ NORMAL 		{CAPITALS}|{LOWER}|{SPACE}|{PUNCTUATION}
 void yyerror(char *s){ fprintf(stderr, "%s\n", s);}
 %}
 
+%x REALLYEND
+
 %%
 "\n"		return ENDLINE;
-{CAPITALS}+ 	{printf("%s\n", yytext);yylval.str = yytext; return VARNAME;}
-"="		return EQUAL;
+{CAPITALS}+ 	{yylval.str = strdup(yytext); return VARNAME;}
+"="{NORMAL}+	{yylval.str = strdup(yytext + 1);return CONTENT;}
 "%""\n" 	{return SEPERATOR;}
-{NORMAL}+	{yylval.str = yytext; return WORD;}
-<<EOF>>		{return EOI;}
+{NONCAPITALS}+	{yylval.str = strdup(yytext); return WORD;}
+<INITIAL><<EOF>>		{BEGIN(REALLYEND); return EOI;}
+<REALLYEND><<EOF>>      { return 0; }
 .		{yyerror("Illigal Characters"); exit(1);}
 %%

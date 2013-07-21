@@ -47,12 +47,12 @@ extern int yydebug;
       know about them.  */
    enum yytokentype {
      VARNAME = 258,
-     EQUAL = 259,
-     WORD = 260,
-     TEXT = 261,
-     SEPERATOR = 262,
-     ENDLINE = 263,
-     EOI = 264
+     WORD = 259,
+     TEXT = 260,
+     SEPERATOR = 261,
+     ENDLINE = 262,
+     EOI = 263,
+     CONTENT = 264
    };
 #endif
 

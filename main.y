@@ -11,13 +11,13 @@ dict *d;
     char *str;
 }
 
-%token<str> VARNAME EQUAL WORD TEXT SEPERATOR ENDLINE EOI
+%token<str> VARNAME WORD TEXT SEPERATOR ENDLINE EOI CONTENT
 
 %%
 input: rules SEPERATOR main_text EOI
-rules:	
-     | VARNAME EQUAL WORD ENDLINE rules	{add(d, $1, $3);}
-main_text:
+rules: 
+     | VARNAME CONTENT ENDLINE rules	{add(d, $1, $2);}
+main_text: 
 	 | word main_text
 word: WORD {printf($1);}
     | VARNAME {char *content = find(d, $1); if (content == NULL) content = $1; printf("%s", content);} 
