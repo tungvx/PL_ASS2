@@ -14,7 +14,7 @@ dict *d;
 %token<str> VARNAME WORD TEXT SEPERATOR ENDLINE EOI CONTENT EQUAL
 
 %%
-input: rules SEPERATOR main_text
+input: rules SEPERATOR main_text EOI
 rules: 
      | VARNAME EQUAL CONTENT ENDLINE rules	{add(d, $1, $3);}
 main_text: 
