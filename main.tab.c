@@ -1351,7 +1351,7 @@ yyreduce:
   case 7:
 /* Line 1787 of yacc.c  */
 #line 22 "main.y"
-    {printf((yyvsp[(1) - (1)].str));}
+    {printf("%s", (yyvsp[(1) - (1)].str));}
     break;
 
   case 8:

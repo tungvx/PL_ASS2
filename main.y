@@ -19,7 +19,7 @@ rules:
      | VARNAME EQUAL CONTENT ENDLINE rules	{add(d, $1, $3);}
 main_text: 
 	 | word main_text
-word: WORD {printf($1);}
+word: WORD {printf("%s", $1);}
     | VARNAME {char *content = find(d, $1); if (content == NULL) content = $1; printf("%s", content);} 
     | ENDLINE {printf("\n");}
 %%
