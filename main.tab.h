@@ -52,7 +52,8 @@ extern int yydebug;
      SEPERATOR = 261,
      ENDLINE = 262,
      EOI = 263,
-     CONTENT = 264
+     CONTENT = 264,
+     EQUAL = 265
    };
 #endif
 
@@ -67,7 +68,7 @@ typedef union YYSTYPE
 
 
 /* Line 2053 of yacc.c  */
-#line 71 "main.tab.h"
+#line 72 "main.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -8,18 +8,20 @@ NORMAL		{CAPITALS}|{NONCAPITALS}
 
 %{
 #include "main.tab.h"
-#include <string.h>    
+#include <string.h>   
+#include <stdbool.h>    
 void yyerror(char *s){ fprintf(stderr, "%s\n", s);}
 %}
 
-%x REALLYEND
+%x REALLYEND CONTENT_TOKEN
 
 %%
 "\n"		return ENDLINE;
 {CAPITALS}+ 	{yylval.str = strdup(yytext); return VARNAME;}
-"="{NORMAL}+	{yylval.str = strdup(yytext + 1);return CONTENT;}
+"="		{BEGIN(CONTENT_TOKEN); return EQUAL;}
 "%""\n" 	{return SEPERATOR;}
 {NONCAPITALS}+	{yylval.str = strdup(yytext); return WORD;}
+<CONTENT_TOKEN>{NORMAL}+	{yylval.str = strdup(yytext); BEGIN(INITIAL); return CONTENT;}
 <INITIAL><<EOF>>		{BEGIN(REALLYEND); return EOI;}
 <REALLYEND><<EOF>>      { return 0; }
 .		{yyerror("Illigal Characters"); exit(1);}
