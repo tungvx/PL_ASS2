@@ -4,6 +4,7 @@
 #include "gc.h"
     
 extern int yylex();
+extern FILE * yyin;
 dict *d;
 %}
 
@@ -24,7 +25,17 @@ word: WORD {printf("%s", $1);}
     | ENDLINE {printf("\n");}
 %%
 
-int main(int argc, char *argv){
+int main(int argc, char *argv[]){
+    if (argc == 2){
+	yyin = fopen(argv[1], "r");
+	if (yyin == NULL) {
+	    printf("File does not exist\n");
+	    return 1;
+	}
+    } else {
+	printf("We need the file name!\n");
+	return 1;
+    }
     GC_INIT();
     d = GC_MALLOC(sizeof(dict));
     yyparse();

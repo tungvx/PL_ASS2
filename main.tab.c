@@ -70,10 +70,11 @@
 #include "gc.h"
     
 extern int yylex();
+extern FILE * yyin;
 dict *d;
 
 /* Line 371 of yacc.c  */
-#line 77 "main.tab.c"
+#line 78 "main.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -125,13 +126,13 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 10 "main.y"
+#line 11 "main.y"
 
     char *str;
 
 
 /* Line 387 of yacc.c  */
-#line 135 "main.tab.c"
+#line 136 "main.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -159,7 +160,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 163 "main.tab.c"
+#line 164 "main.tab.c"
 
 #ifdef short
 # undef short
@@ -457,7 +458,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    18,    19,    20,    21,    22,    23,    24
+       0,    18,    18,    19,    20,    21,    22,    23,    24,    25
 };
 #endif
 
@@ -1344,31 +1345,31 @@ yyreduce:
     {
         case 4:
 /* Line 1787 of yacc.c  */
-#line 19 "main.y"
+#line 20 "main.y"
     {add(d, (yyvsp[(1) - (5)].str), (yyvsp[(3) - (5)].str));}
     break;
 
   case 7:
 /* Line 1787 of yacc.c  */
-#line 22 "main.y"
+#line 23 "main.y"
     {printf("%s", (yyvsp[(1) - (1)].str));}
     break;
 
   case 8:
 /* Line 1787 of yacc.c  */
-#line 23 "main.y"
+#line 24 "main.y"
     {char *content = find(d, (yyvsp[(1) - (1)].str)); if (content == NULL) content = (yyvsp[(1) - (1)].str); printf("%s", content);}
     break;
 
   case 9:
 /* Line 1787 of yacc.c  */
-#line 24 "main.y"
+#line 25 "main.y"
     {printf("\n");}
     break;
 
 
 /* Line 1787 of yacc.c  */
-#line 1372 "main.tab.c"
+#line 1373 "main.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1600,10 +1601,20 @@ yyreturn:
 
 
 /* Line 2050 of yacc.c  */
-#line 25 "main.y"
+#line 26 "main.y"
 
 
-int main(int argc, char *argv){
+int main(int argc, char *argv[]){
+    if (argc == 2){
+	yyin = fopen(argv[1], "r");
+	if (yyin == NULL) {
+	    printf("File does not exist\n");
+	    return 1;
+	}
+    } else {
+	printf("We need the file name!\n");
+	return 1;
+    }
     GC_INIT();
     d = GC_MALLOC(sizeof(dict));
     yyparse();

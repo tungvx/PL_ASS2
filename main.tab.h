@@ -62,7 +62,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2053 of yacc.c  */
-#line 10 "main.y"
+#line 11 "main.y"
 
     char *str;
 
