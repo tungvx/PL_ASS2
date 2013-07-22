@@ -12,16 +12,14 @@ NORMAL		{CAPITALS}|{NONCAPITALS}
 void yyerror(char *s){ fprintf(stderr, "%s\n", s);}
 %}
 
-%x REALLYEND CONTENT_TOKEN
+%x REALLYEND
 
 %%
 "\n"		return ENDLINE;
 {CAPITALS}+ 	{yylval.str = strdup(yytext); return VARNAME;}
-"="		{BEGIN(CONTENT_TOKEN); return EQUAL;}
+"="		{return EQUAL;}
 "%""\n" 	{return SEPERATOR;}
 {NONCAPITALS}+	{yylval.str = strdup(yytext); return WORD;}
-<CONTENT_TOKEN>{NORMAL}+	{yylval.str = strdup(yytext); BEGIN(INITIAL); return CONTENT;}
-<CONTENT_TOKEN>"\n"		{BEGIN(INITIAL); return ENDLINE;}
 <INITIAL><<EOF>>		{BEGIN(REALLYEND); return EOI;}
 <REALLYEND><<EOF>>      { return 0; }
 .		{yyerror("Illigal Characters"); exit(1);}

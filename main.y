@@ -12,15 +12,16 @@ dict *d;
     char *str;
 }
 
-%token<str> VARNAME WORD TEXT SEPERATOR ENDLINE EOI CONTENT EQUAL
+%token<str> VARNAME WORD TEXT SEPERATOR ENDLINE EOI EQUAL
 %type<str> content
 
 %%
 input: rules SEPERATOR main_text EOI
 rules: 
-     | VARNAME EQUAL content ENDLINE rules	{add(d, $1, $3);}
+     | VARNAME EQUAL content ENDLINE rules	{printf("Adding: %s\n", $1); add(d, $1, $3);}
 content: 		{$$ = "";}
-	| CONTENT	{$$ = $1;}
+	| WORD content	{$$ = strncat($1, $2, strlen($2));}
+	| VARNAME content {printf("run: %s\n", $1); char* con = find(d, $1); if (con == NULL) con = $1; $$ = strncat(con, $2, strlen($2));}
 main_text: 
 	 | word main_text
 word: WORD {printf("%s", $1);}

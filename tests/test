@@ -1,7 +1,8 @@
 FNAME=Tung Xuan    
 LNAME=Vu
+FULLNAME=FNAME LNAME
 PLACE=Jaist
 %
-My name is FNAME xLNAMEy
+My name is FNAME xLNAMEy, or FULLNAME
 and I am working at PLACE.
 My full name is FNAMELNAME.':,!?;
