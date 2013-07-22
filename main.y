@@ -13,11 +13,14 @@ dict *d;
 }
 
 %token<str> VARNAME WORD TEXT SEPERATOR ENDLINE EOI CONTENT EQUAL
+%type<str> content
 
 %%
 input: rules SEPERATOR main_text EOI
 rules: 
-     | VARNAME EQUAL CONTENT ENDLINE rules	{add(d, $1, $3);}
+     | VARNAME EQUAL content ENDLINE rules	{add(d, $1, $3);}
+content: 		{$$ = "";}
+	| CONTENT	{$$ = $1;}
 main_text: 
 	 | word main_text
 word: WORD {printf("%s", $1);}
