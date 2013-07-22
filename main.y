@@ -21,7 +21,7 @@ rules:
      | rules VARNAME EQUAL content ENDLINE	{add(d, $2, $4);}
 content: 		{$$ = "";}
 	| WORD content	{$$ = GC_MALLOC(sizeof(char) * (strlen($1) + strlen($2) + 1)); strcpy($$, $1); strcat($$, $2);}
-	| VARNAME content {char* con = find(d, $1); if (con == NULL) con = $1; else con = strdup(con); $$ = GC_MALLOC(sizeof(char) * (strlen(con) + strlen($2) + 1)); strcpy($$, con);strcat($$, $2);}
+	| VARNAME content {char* con = find(d, $1); if (con == NULL) con = $1; $$ = GC_MALLOC(sizeof(char) * (strlen(con) + strlen($2) + 1)); strcpy($$, con);strcat($$, $2);}
 main_text: 
 	 | word main_text
 word: WORD {printf("%s", $1);}
