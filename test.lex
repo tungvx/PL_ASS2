@@ -14,15 +14,16 @@ void yyerror(char *s){ fprintf(stderr, "%s\n", s);}
 
 %%
 "\n"		printf("ENDL\n");
-{CAPITALS}+ 	{printf("Varname "); }
+"\r""\n"	printf("ENDL\n");
+{CAPITALS}+ 	printf("Varname ");
 "="		{printf("Equal "); BEGIN(CONTENT_TOKEN);}
-"%""\n" 	{printf("Sep\n"); }
+"%""\r""\n" 	{printf("Sep\n"); }
 {NONCAPITALS}+	{printf("Word "); }
-<CONTENT_TOKEN>{NORMAL}+	{printf("Content "); }
-<CONTENT_TOKEN>"\n"		{printf("ENDL1\n"); BEGIN(INITIAL);}
+<CONTENT_TOKEN>{NORMAL}+	{printf("Content "); BEGIN(INITIAL);}
+<CONTENT_TOKEN>"\n"		{printf("ENDL2\n");}
 <INITIAL><<EOF>>		{printf("EOF"); return;}
 <REALLYEND><<EOF>>      { return 0; }
-.		{yyerror("Illigal Characters"); exit(1);}
+.		{yyerror("Illigal Characters: "); printf(yytext); exit(1);}
 %%
 
 int main(){
