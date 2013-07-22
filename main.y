@@ -18,10 +18,10 @@ dict *d;
 %%
 input: rules SEPERATOR main_text EOI
 rules: 
-     | VARNAME EQUAL content ENDLINE rules	{printf("Adding: %s\n", $1); add(d, $1, $3);}
+     | rules VARNAME EQUAL content ENDLINE	{add(d, $2, $4);}
 content: 		{$$ = "";}
-	| WORD content	{$$ = strncat($1, $2, strlen($2));}
-	| VARNAME content {printf("run: %s\n", $1); char* con = find(d, $1); if (con == NULL) con = $1; $$ = strncat(con, $2, strlen($2));}
+	| WORD content	{$$ = GC_MALLOC(sizeof(char) * (strlen($1) + strlen($2) + 1)); strcpy($$, $1); strcat($$, $2);}
+	| VARNAME content {char* con = find(d, $1); if (con == NULL) con = $1; else con = strdup(con); $$ = GC_MALLOC(sizeof(char) * (strlen(con) + strlen($2) + 1)); strcpy($$, con);strcat($$, $2);}
 main_text: 
 	 | word main_text
 word: WORD {printf("%s", $1);}

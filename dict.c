@@ -3,8 +3,6 @@
 #include "dict.h"
 #include "gc.h"
 
-int MAX_KEY_SIZE = 1000;
-
 void updateHeight(dict *d);
 int getHeight(dict *d);
 void balance(dict *d);
@@ -25,7 +23,7 @@ void add(dict *d, char *key, char *content){
     dict new_node = newNode(key, content);
     if (root == NULL) *d = new_node;
     else {
-	int compare = strncmp(key, root->key, MAX_KEY_SIZE);
+	int compare = strcmp(key, root->key);
 	if (compare == 0) root->content = content;
 	else if (compare > 0){
 	    add(&root->right, key, content);
@@ -42,7 +40,7 @@ void add(dict *d, char *key, char *content){
 char *find(dict *d, char *key){
     dict root = *d;
     if (root == NULL) return NULL;
-    int compare = strncmp(key, root->key, MAX_KEY_SIZE);
+    int compare = strcmp(key, root->key);
     if (compare == 0) return root->content;
     else if (compare > 0){
 	return find(&root->right, key);
