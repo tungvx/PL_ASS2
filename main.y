@@ -42,5 +42,6 @@ int main(int argc, char *argv[]){
     GC_INIT();
     d = GC_MALLOC(sizeof(dict));
     yyparse();
+    fclose(yyin);
     return 0;
 }
