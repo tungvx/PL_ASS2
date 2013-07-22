@@ -24,4 +24,4 @@ main.tab.c main.tab.h : main.y
 	$(BISON) $(BISONFLAGS) main.y
 
 clean : 
-	rm *.o main
+	rm *.o main main.tab.h main.tab.c lex.yy.c
