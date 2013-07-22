@@ -1,0 +1,8 @@
+TEST=test
+COMPLEX=more complex
+LINES=multiple lines
+%
+This is a COMPLEX TEST that contains LINES.
+Some MACRO can not be replaced.
+LINE or LINESS are not correct macros.
+This is also TESTreplaced.

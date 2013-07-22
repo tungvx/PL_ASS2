@@ -1,0 +1,8 @@
+ONE=one
+TWO=ONE plus ONE
+FOUR=TWO plus TWO
+SIX=THREE plus THREE
+THREE=three
+%
+FOUR equals four?
+SIX equals six?

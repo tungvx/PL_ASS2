@@ -1,0 +1,8 @@
+A=test
+B=more complex
+C=with multiple lines
+%
+this is a B A
+The file contains C.
+
+and even an empty line!
